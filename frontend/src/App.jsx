@@ -13,12 +13,19 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import RendezVousList from './pages/RendezVousList';
 import RendezVousCreate from './pages/RendezVousCreate';
+import RendezVousDetail from './pages/RendezVousDetail';
 import PraticiensList from './pages/PraticiensList';
 import PraticienCreate from './pages/PraticienCreate';
+import PraticienPlanning from './pages/PraticienPlanning';
+import PraticienEdit from './pages/PraticienEdit';
 import PatientsList from './pages/PatientsList';
 import PatientCreate from './pages/PatientCreate';
+import PatientDetail from './pages/PatientDetail';
+import PatientEdit from './pages/PatientEdit';
 import Statistiques from './pages/Statistiques';
 import AnnulationsList from './pages/AnnulationsList';
+import LogsList from './pages/LogsList';
+import RappelsList from './pages/RappelsList';
 
 // Composant de layout pour les pages protégées
 const ProtectedLayout = ({ children, allowedRoles }) => {
@@ -70,6 +77,15 @@ function App() {
               </ProtectedLayout>
             }
           />
+          
+          <Route
+            path="/rendez-vous/:id"
+            element={
+              <ProtectedLayout>
+                <RendezVousDetail />
+              </ProtectedLayout>
+            }
+          />
 
           {/* Praticiens - Admin uniquement */}
           <Route
@@ -86,6 +102,24 @@ function App() {
             element={
               <ProtectedLayout allowedRoles={['admin']}>
                 <PraticienCreate />
+              </ProtectedLayout>
+            }
+          />
+          
+          <Route
+            path="/praticiens/:id/planning"
+            element={
+              <ProtectedLayout allowedRoles={['admin', 'praticien']}>
+                <PraticienPlanning />
+              </ProtectedLayout>
+            }
+          />
+          
+          <Route
+            path="/praticiens/:id/edit"
+            element={
+              <ProtectedLayout allowedRoles={['admin']}>
+                <PraticienEdit />
               </ProtectedLayout>
             }
           />
@@ -108,6 +142,24 @@ function App() {
               </ProtectedLayout>
             }
           />
+          
+          <Route
+            path="/patients/:id"
+            element={
+              <ProtectedLayout allowedRoles={['admin', 'praticien']}>
+                <PatientDetail />
+              </ProtectedLayout>
+            }
+          />
+          
+          <Route
+            path="/patients/:id/edit"
+            element={
+              <ProtectedLayout allowedRoles={['admin', 'praticien']}>
+                <PatientEdit />
+              </ProtectedLayout>
+            }
+          />
 
           {/* Annulations - Admin et Praticiens */}
           <Route
@@ -124,10 +176,7 @@ function App() {
             path="/rappels"
             element={
               <ProtectedLayout allowedRoles={['admin']}>
-                <div className="p-8">
-                  <h1 className="text-2xl font-bold">Gestion des Rappels</h1>
-                  <p className="text-gray-600 mt-2">Page en construction</p>
-                </div>
+                <RappelsList />
               </ProtectedLayout>
             }
           />
@@ -147,10 +196,7 @@ function App() {
             path="/logs"
             element={
               <ProtectedLayout allowedRoles={['admin']}>
-                <div className="p-8">
-                  <h1 className="text-2xl font-bold">Logs Système</h1>
-                  <p className="text-gray-600 mt-2">Page en construction</p>
-                </div>
+                <LogsList />
               </ProtectedLayout>
             }
           />
